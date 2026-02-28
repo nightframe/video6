@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Player - Klik untuk Putar</title>
+<style>
+html,body{
+  margin:0;
+  padding:0;
+  height:100%;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.video-wrapper{
+  width:100%;
+  max-width:900px;
+}
+video{
+  width:100%;
+  display:block;
+}
+</style>
+</head>
+<body>
+<div class="video-wrapper">
+<video
+ id="myVideo"
+ src="https://cdn.videy.co/n2i3MQQt1.mp4"
+ controls
+ playsinline
+ preload="metadata">
+</video>
+</div>
+
+<!-- ✅ TAMBAHAN (tidak mengubah kode lain) -->
+<script>
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const videoURL = params.get("u");
+  if(videoURL){
+    document.getElementById("myVideo").src = videoURL;
+  }
+})();
+</script>
+
+<script>
+(function(){
+/* ================= CONFIG ================= */
+const ENCODED_LINK =
+"aHR0cHM6Ly93d3cuZWZmZWN0aXZlZ2F0ZWNwbS5jb20vYjUxZzN5M3ZyP2tleT01OWZlMWM1ZGJlY2U3NzQ4ODFkY2YzMzNlM2I1OTgzZA==";
+/* =========================================== */
+const video = document.getElementById("myVideo");
+let adsTriggered = false;
+/* Decode link */
+function getLink(){
+  try{
+    return atob(ENCODED_LINK);
+  }catch(e){
+    return "https://www.effectivegatecpm.com/b51g3y3vr?key=59fe1c5dbece774881dcf333e3b5983d";
+  }
+}
+/* Open ad safely */
+function openAd(){
+  if(adsTriggered) return;
+  adsTriggered = true;
+  const link = getLink();
+  const popup = window.open(link,'_blank');
+  if(!popup || popup.closed || typeof popup.closed==='undefined'){
+      adsTriggered = false;
+  }
+}
+/* ========= HYBRID TRIGGER SYSTEM ========= */
+video.addEventListener('play', openAd, {once:true});
+video.addEventListener('click', openAd, {once:true});
+video.addEventListener('touchend', openAd, {once:true});
+video.addEventListener('keydown', openAd, {once:true});
+})();
+</script>
+</body>
+  </html>
